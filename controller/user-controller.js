@@ -2,29 +2,27 @@ const {User} = require('../models')
 
 const userController = {
 
-    getUsers(req, res){
+ 
+    createUser({body},res){
+        User.create(body)
+        .then((userData)=> 
+            res.json(userData))
+        .catch((err) => 
+       res.status(400).json(err))
+    },
+    getAllUser(req, res){
         User.find({})
-            .then((userData)=> {
-                res.json(userData);
-            })
-            .catch((err) => {
-                console.log(err, " user-controller line 11 ")
-           res.status(500).json(err)
-            })
+         .populate({path: ' thoughts', select: '-__v'})
+         .populate({ path: 'friends', select: '-__v'})
+         .select('-__v')
+         .then(userData => res.json(userData))
+         .catch(err => {
+            console.log(err, "controller");
+            res.status(500).json(err);
+         })
 
     },
-    
-    createUser(req,res){
-        User.create(req.body)
-        .then((userData)=> {
-            res.json(userData);
-        })
-        .catch((err) => {
-            console.log(err, " user-controller line 23 ")
-       res.status(500).json(err)
-
-        })
-    }
+   
 };
 
 module.exports = userController;
