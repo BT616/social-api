@@ -10,7 +10,7 @@ const {
 } = require('../../controller/thought-controller')
 
 
-router.route('/').get(getAllThought).post(createThought);
+router.route('/').get(getAllThought);
 
 
 module.exports = router;
