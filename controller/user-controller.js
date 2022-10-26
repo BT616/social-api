@@ -1,5 +1,4 @@
 const { User } = require('../models')
-
 const userController = {
 
     // get single user by id
